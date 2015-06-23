@@ -5,7 +5,6 @@ class BinaryTreeNode:
         self.right = right
         self.parent = parent
         self.value = value
-        self.color = color
 
     def __lt__(self, other):
         return self.value < other
@@ -17,8 +16,9 @@ class BinaryTreeNode:
         return self.value == other
 
 class BinaryTree:
-    def __init__(self, first_node):
-        self.first_node = first_node
+    def __init__(self):
+        self.first_node = None
+        self.length = 0
 
 
 class BinarySearchTree(BinaryTree):
@@ -26,6 +26,7 @@ class BinarySearchTree(BinaryTree):
         node = self.first_node
         if not node:
             self.first_node = BinaryTreeNode(value)
+            return
         while True:
             if node == value:  # Already in the tree
                 break
@@ -34,11 +35,13 @@ class BinarySearchTree(BinaryTree):
                     node = node.right
                 else:
                     node.right = BinaryTreeNode(value, parent=node)
+                    self.length += 1
             else:
                 if node.left:
                     node = node.left
                 else:
                     node.left = BinaryTreeNode(value, parent=node)
+                    self.length += 1
 
     def find(self, value):
         node = self.first_node
