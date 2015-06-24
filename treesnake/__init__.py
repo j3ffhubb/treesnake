@@ -1,9 +1,8 @@
 
 class BinaryTreeNode:
-    def __init__(self, value, left=None, right=None, parent=None):
+    def __init__(self, value, left=None, right=None):
         self.left = left
         self.right = right
-        self.parent = parent
         self.value = value
 
     def __lt__(self, other):
@@ -34,13 +33,13 @@ class BinarySearchTree(BinaryTree):
                 if node.right:
                     node = node.right
                 else:
-                    node.right = BinaryTreeNode(value, parent=node)
+                    node.right = BinaryTreeNode(value)
                     self.length += 1
             else:
                 if node.left:
                     node = node.left
                 else:
-                    node.left = BinaryTreeNode(value, parent=node)
+                    node.left = BinaryTreeNode(value)
                     self.length += 1
 
     def find(self, value):
