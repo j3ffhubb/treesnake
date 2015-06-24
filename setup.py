@@ -22,7 +22,7 @@ setuptools.setup(
     author="Jeff Hubbard",
     author_email='musikernel@nospam.org',
     license='GPL 3.0',
-    description='Tree-family data structure',
+    description='Tree-family data structures',
     url='https://github.com/j3ffhubb/treesnake',
     packages=setuptools.find_packages(),
     include_package_data=True,
