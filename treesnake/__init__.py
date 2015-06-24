@@ -59,24 +59,22 @@ class BinarySearchTree(BinaryTree):
         pass
 
     def is_bst(self):
-        if not self.first_node:
-            return True
-        return self._is_bst(self.first_node, None, None)
+        stack = []
+        node = self.first_node
+        last_node = None
 
-    def _is_bst(self, node, min_val, max_val):
-        if node is None:
-            return True
-        min_arg = None if min_val is None else min([node.value, max_val])
-        max_arg = None if max_val is None else max([node.value, min_val])
-        if((min_val is None or node.value > min_val) and
-        (max_val is None or node.value < max_val) and
-        self._is_bst(node.left, min_val, min_arg) and
-        self._is_bst(node.right, max_arg, max_val)):
-            return True
-        else:
-            return False
+        while stack or node:
+            if node:
+                stack.append(node)
+                node = node.left
+            else:
+                node = stack.pop()
+                if last_node and node < last_node:
+                    return False
+                last_node = node
+                node = node.right
 
-
+        return True
 
 class RedBlackNode(BinaryTreeNode):
     Red = 0
