@@ -6,6 +6,33 @@ class BinaryTreeNode:
         self.parent = parent
         self.value = value
 
+    def find_min(self):
+        node = self
+        while node.left:
+            node = node.left
+        return node
+
+    def replace(self, node=None):
+        if self.parent:
+            if self == self.parent.left:
+                self.parent.left = node
+            else:
+                self.parent.right = node
+        if node:
+            node.parent = self.parent
+
+    def delete(self):
+        if self.left and self.right:
+            successor = self.right.find_min()
+            self.value = successor.value
+            successor.delete()
+        elif self.left:
+            self.replace(self.left)
+        elif self.right:
+            self.replace(self.right)
+        else:
+            self.replace(None)
+
     def __lt__(self, other):
         return self.value < other
 
@@ -18,7 +45,10 @@ class BinaryTreeNode:
 class BinaryTree:
     def __init__(self):
         self.first_node = None
-        self.length = 0
+        self._length = 0
+
+    def __len__(self):
+        return self._length
 
 
 class BinarySearchTree(BinaryTree):
@@ -35,13 +65,13 @@ class BinarySearchTree(BinaryTree):
                     node = node.right
                 else:
                     node.right = BinaryTreeNode(value, parent=node)
-                    self.length += 1
+                    self._length += 1
             else:
                 if node.left:
                     node = node.left
                 else:
                     node.left = BinaryTreeNode(value, parent=node)
-                    self.length += 1
+                    self._length += 1
 
     def find(self, value):
         node = self.first_node
@@ -56,7 +86,13 @@ class BinarySearchTree(BinaryTree):
                 node = node.left
 
     def delete(self, value):
-        pass
+        node = self.find(value)
+        if node:
+            node.delete()
+            self._length -= 1
+            return True
+        else:
+            return False
 
     def is_bst(self):
         stack = []
@@ -75,19 +111,5 @@ class BinarySearchTree(BinaryTree):
                 node = node.right
 
         return True
-
-class RedBlackNode(BinaryTreeNode):
-    Red = 0
-    Black = 1
-    def __init__(*args, **kwargs):
-        BinaryTreeNode.__init__(self, *args, **kwargs)
-        self.color = kwargs["color"]
-
-class RedBlackTree(BinaryTree):
-    def insert(self, value):
-        pass
-
-    def delete(self, value):
-        pass
 
 

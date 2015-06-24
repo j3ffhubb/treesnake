@@ -16,9 +16,9 @@ class BstTests(unittest.TestCase):
             tree.insert(node)
         self.assertTrue(tree.is_bst())
 
-#        for value in values[200:300:2]:
-#            tree.delete(value)
-#        self.assertTrue(tree.is_bst())
+        for value in values[200:300:2]:
+            tree.delete(value)
+        self.assertTrue(tree.is_bst())
 
     def test_empty_is_bst(self):
         tree = BinarySearchTree()
