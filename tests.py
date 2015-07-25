@@ -55,6 +55,15 @@ class BinaryTreeTests(unittest.TestCase):
             result = method(out_of_range)
             self.assertIsNone(result)
 
+    def test_height(self):
+        tree = BinaryTree()
+        self.assertEqual(tree.height(tree.first_node), -1)
+        tree.first_node = BinaryTreeNode(1)
+        self.assertEqual(tree.height(tree.first_node), 0)
+        tree.first_node.left = BinaryTreeNode(0)
+        self.assertEqual(tree.height(tree.first_node), 1)
+
+
 class BstTests(unittest.TestCase):
     def test_random_is_bst(self):
         tree = BinarySearchTree()

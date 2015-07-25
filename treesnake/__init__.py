@@ -132,6 +132,10 @@ class BinaryTree:
             return node
         return None
 
+    def height(self, node):
+        if node is None:
+            return -1
+        return max(self.height(node.left), self.height(node.right)) + 1
 
 class BinarySearchTree(BinaryTree):
     def insert(self, value):
