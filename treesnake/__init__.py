@@ -177,21 +177,13 @@ class BinarySearchTree(BinaryTree):
             return False
 
     def is_bst(self):
-        stack = []
-        node = self.first_node
-        last_node = None
-
-        while stack or node:
-            if node:
-                stack.append(node)
-                node = node.left
-            else:
-                node = stack.pop()
-                if last_node and node < last_node:
-                    return False
-                last_node = node
-                node = node.right
-
+        if self.first_node is None:
+            return True
+        generator = self.inorder_dft()
+        last = next(generator)
+        for node in generator:
+            if node.value < last.value:
+                return False
+            last = node
         return True
-
 
