@@ -86,6 +86,29 @@ class BinaryTree:
             return node
         return None
 
+    def preorder_dft(self):
+        """ Pre-order depth-first traversal generator """
+        stack = []
+        node = self.first_node
+        while stack or node:
+            yield node
+            if node:
+                stack.append(node)
+                node = node.left
+            else:
+                node = stack.pop()
+                node = node.right
+
+    def preorder_dfs(self, value):
+        """ Pre-order depth-first-search
+
+            @value  The value to search for
+            @return The node containing the value, or None if not found
+        """
+        for node in (x for x in self.preorder_dft() if x == value):
+            return node
+        return None
+
     def inorder_dft(self):
         """ In-order depth-first traversal generator """
         stack = []

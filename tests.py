@@ -18,7 +18,7 @@ import unittest
 from treesnake import *
 
 class BinaryTreeTests(unittest.TestCase):
-    def test_bfs(self):
+    def test_search(self):
         tree = BinaryTree()
         vals = [random.randint(-9999, 9999) for x in range(50)]
         gen = (BinaryTreeNode(x) for x in vals)
@@ -43,10 +43,17 @@ class BinaryTreeTests(unittest.TestCase):
 
         for val in vals:
             bfs = tree.bfs(val)
+            preorder_dfs = tree.preorder_dfs(val)
             inorder_dfs = tree.inorder_dfs(val)
-            for result in (bfs, inorder_dfs):
+            for result in (bfs, preorder_dfs, inorder_dfs):
                 self.assertIsNotNone(result)
                 self.assertEqual(val, result.value)
+
+        out_of_range = 1000000 # randint could not have generated this number
+
+        for method in (tree.bfs, tree.preorder_dfs, tree.inorder_dfs):
+            result = method(out_of_range)
+            self.assertIsNone(result)
 
 class BstTests(unittest.TestCase):
     def test_random_is_bst(self):
