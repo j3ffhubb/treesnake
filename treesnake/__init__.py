@@ -11,6 +11,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 GNU General Public License for more details.
 """
 
+import collections
 
 class BinaryTreeNode:
     def __init__(self, value, left=None, right=None, parent=None):
@@ -63,6 +64,23 @@ class BinaryTree:
     def __len__(self):
         return self._length
 
+    def bfs(self, value):
+        """ Breadth-first search
+
+            @return The BinaryTreeNode, or None if not found
+        """
+        fifo = collections.deque()
+        fifo.append(self.first_node)
+        while fifo:
+            node = fifo.popleft()
+            if node == value:
+                return node
+            else:
+                if node.left:
+                    fifo.append(node.left)
+                if node.right:
+                    fifo.append(node.right)
+        return None
 
 class BinarySearchTree(BinaryTree):
     def insert(self, value):

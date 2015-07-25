@@ -12,13 +12,42 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 GNU General Public License for more details.
 """
 
-
+import collections
+import random
 import unittest
 from treesnake import *
 
+class BinaryTreeTests(unittest.TestCase):
+    def test_bfs(self):
+        tree = BinaryTree()
+        vals = [random.randint(-9999, 9999) for x in range(50)]
+        gen = (BinaryTreeNode(x) for x in vals)
+        tree.first_node = next(gen)
+        fifo = collections.deque()
+        fifo.append(tree.first_node)
+
+        while fifo:
+            node = fifo.popleft()
+            try:
+                node_left = next(gen)
+            except StopIteration:
+                break
+            node.left = node_left
+            fifo.append(node_left)
+            try:
+                node_right = next(gen)
+            except StopIteration:
+                break
+            node.right = node_right
+            fifo.append(node_right)
+
+        for val in vals:
+            result = tree.bfs(val)
+            self.assertIsNotNone(result)
+            self.assertEqual(val, result.value)
+
 class BstTests(unittest.TestCase):
     def test_random_is_bst(self):
-        import random
         tree = BinarySearchTree()
         values = []
 
