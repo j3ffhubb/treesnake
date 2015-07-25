@@ -42,9 +42,11 @@ class BinaryTreeTests(unittest.TestCase):
             fifo.append(node_right)
 
         for val in vals:
-            result = tree.bfs(val)
-            self.assertIsNotNone(result)
-            self.assertEqual(val, result.value)
+            bfs = tree.bfs(val)
+            inorder_dfs = tree.inorder_dfs(val)
+            for result in (bfs, inorder_dfs):
+                self.assertIsNotNone(result)
+                self.assertEqual(val, result.value)
 
 class BstTests(unittest.TestCase):
     def test_random_is_bst(self):
