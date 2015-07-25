@@ -64,22 +64,26 @@ class BinaryTree:
     def __len__(self):
         return self._length
 
-    def bfs(self, value):
-        """ Breadth-first search
-
-            @return The BinaryTreeNode, or None if not found
-        """
+    def bft(self):
+        """ Breadth-first traversal generator """
         fifo = collections.deque()
         fifo.append(self.first_node)
         while fifo:
             node = fifo.popleft()
-            if node == value:
-                return node
-            else:
-                if node.left:
-                    fifo.append(node.left)
-                if node.right:
-                    fifo.append(node.right)
+            yield node
+            if node.left:
+                fifo.append(node.left)
+            if node.right:
+                fifo.append(node.right)
+
+    def bfs(self, value):
+        """ Breadth-first-search
+
+            @value  The value to search for
+            @return The node containing the value, or None if not found
+        """
+        for node in (x for x in self.bft() if x == value):
+            return node
         return None
 
 class BinarySearchTree(BinaryTree):
